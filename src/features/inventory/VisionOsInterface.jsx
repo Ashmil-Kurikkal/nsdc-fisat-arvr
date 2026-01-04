@@ -3,7 +3,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Canvas } from "@react-three/fiber";
 import { Environment, PerspectiveCamera, ContactShadows } from "@react-three/drei";
 import { INVENTORY_DATA, categories } from "./assets/data";
-import { Layers, Cpu, ChevronRight } from "lucide-react";
+import { PRODUCT_LINKS } from "./assets/links";
+import { Layers, Cpu, ChevronRight, ExternalLink, ShoppingBag, Globe } from "lucide-react";
 import HoloCard from "./components/HoloCard.jsx";
 import { useNavigate } from "react-router-dom";
 
@@ -50,34 +51,13 @@ export default function VisionOSInterface() {
       
       {/* --- CSS STYLES --- */}
       <style>{`
-        /* Existing hide utility */
-        .hide-scrollbar::-webkit-scrollbar {
-          display: none;
-        }
-        .hide-scrollbar {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-
-        /* Styled Scrollbar */
-        .styled-scrollbar {
-          scrollbar-width: thin;
-          scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
-        }
-        .styled-scrollbar::-webkit-scrollbar {
-          height: 4px; /* Thin height */
-        }
-        .styled-scrollbar::-webkit-scrollbar-track {
-          background: transparent;
-          margin: 0 4px; /* Small margin on track */
-        }
-        .styled-scrollbar::-webkit-scrollbar-thumb {
-          background-color: rgba(255, 255, 255, 0.2);
-          border-radius: 20px;
-        }
-        .styled-scrollbar::-webkit-scrollbar-thumb:hover {
-          background-color: rgba(255, 255, 255, 0.4);
-        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .styled-scrollbar { scrollbar-width: thin; scrollbar-color: rgba(255, 255, 255, 0.2) transparent; }
+        .styled-scrollbar::-webkit-scrollbar { height: 4px; }
+        .styled-scrollbar::-webkit-scrollbar-track { background: transparent; margin: 0 4px; }
+        .styled-scrollbar::-webkit-scrollbar-thumb { background-color: rgba(255, 255, 255, 0.2); border-radius: 20px; }
+        .styled-scrollbar::-webkit-scrollbar-thumb:hover { background-color: rgba(255, 255, 255, 0.4); }
       `}</style>
 
       {/* --- BACKGROUND --- */}
@@ -89,7 +69,7 @@ export default function VisionOSInterface() {
       {/* --- FIXED HEADER --- */}
       <div className="relative z-50 flex flex-col md:flex-row items-center justify-between px-6 py-6 gap-6 w-full max-w-[1800px] mx-auto">
         
-        {/* 1. Title Section (Fixed Width) */}
+        {/* Title */}
         <div className="flex items-center gap-4 shrink-0 self-start md:self-center">
             <GlassPanel className="w-10 h-10 rounded-full flex items-center justify-center cursor-pointer hover:bg-white/20 transition-all group">
                 <button onClick={() => navigate('/')} className="text-white/70 group-hover:text-white transition-colors flex items-center justify-center w-full h-full">
@@ -101,19 +81,9 @@ export default function VisionOSInterface() {
             </h1>
         </div>
 
-        {/* 2. Category Tabs (Flexible & Scrollable) */}
+        {/* Categories */}
         <div className="w-full md:flex-1 min-w-0 flex justify-start md:justify-end">
-            
-            {/* WRAPPER DIV: 
-               - Handles the 'overflow-x-auto' and 'styled-scrollbar'.
-               - 'pb-4' adds padding at the bottom so the scrollbar sits BELOW the glass panel.
-            */}
             <div className="overflow-x-scroll styled-scrollbar pb-4 max-w-full">
-                
-                {/* GLASS PANEL: 
-                   - 'w-max' ensures the panel grows with buttons (doesn't wrap).
-                   - Removed overflow/scrollbar classes from here.
-                */}
                 <GlassPanel className="w-max flex flex-row gap-1 p-1.5 rounded-full">
                     {categories.map((cat) => (
                         <button
@@ -189,7 +159,7 @@ export default function VisionOSInterface() {
                 </div>
             </GlassPanel>
 
-            {/* RIGHT WING (Description) */}
+            {/* RIGHT WING (Description + Links) */}
             <AnimatePresence mode="wait">
               {activeItem && !isMobile && (
                 <motion.div
@@ -199,7 +169,7 @@ export default function VisionOSInterface() {
                   transition={{ type: "spring", bounce: 0, duration: 0.5 }}
                   className="hidden lg:block h-[420px] overflow-hidden shrink-0"
                 >
-                  <GlassPanel className="h-full w-[280px] p-6 rounded-3xl flex flex-col justify-center bg-black/20 ml-auto">
+                  <GlassPanel className="h-full w-[280px] p-6 rounded-3xl flex flex-col bg-black/20 ml-auto">
                     <DescriptionContent item={activeItem} />
                   </GlassPanel>
                 </motion.div>
@@ -264,17 +234,82 @@ const SpecsContent = ({ item }) => (
     </div>
 );
 
-const DescriptionContent = ({ item }) => (
-    <div className="flex flex-col h-full justify-center">
-        <div className="flex items-center gap-2 mb-4 text-purple-300">
-            <Layers size={16} />
-            <span className="text-[10px] font-bold uppercase tracking-widest">Description</span>
+// --- UPDATED DESCRIPTION CONTENT WITH LINKS ---
+const DescriptionContent = ({ item }) => {
+    const links = PRODUCT_LINKS[item.id];
+
+    return (
+        <div className="flex flex-col h-full">
+            {/* Top: Description */}
+            <div className="flex-1 overflow-y-auto styled-scrollbar pr-2">
+                <div className="flex items-center gap-2 mb-4 text-purple-300">
+                    <Layers size={16} />
+                    <span className="text-[10px] font-bold uppercase tracking-widest">Description</span>
+                </div>
+                <p className="text-sm leading-relaxed text-white/80 font-light">
+                    {item.description}
+                </p>
+            </div>
+
+            {/* Bottom: Links Section */}
+            {links && (
+                <div className="mt-4 pt-4 border-t border-white/10 shrink-0">
+                    <div className="flex flex-col gap-2">
+                        {/* 1. Main Link Button */}
+                        {links.main && (
+                            <a 
+                                href={links.main} 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="flex items-center justify-between px-4 py-3 bg-white/10 hover:bg-white text-white hover:text-black rounded-xl transition-all duration-300 group"
+                            >
+                                <span className="text-xs font-bold flex items-center gap-2">
+                                    <ShoppingBag size={14} className="text-white/60 group-hover:text-black" />
+                                    View Product
+                                </span>
+                                <ExternalLink size={12} className="opacity-50 group-hover:opacity-100" />
+                            </a>
+                        )}
+
+                        {/* 2. Regional / Alt Links */}
+                        {(links.regions || links.alt || links.trackers || links.teleprompter) && (
+                            <div className="flex flex-wrap gap-2 mt-1">
+                                {Object.entries(links.regions || {}).map(([region, url]) => (
+                                    <a 
+                                        key={region} 
+                                        href={url} 
+                                        target="_blank" 
+                                        rel="noopener noreferrer"
+                                        className="px-2 py-1 rounded-md bg-white/5 hover:bg-white/20 text-[10px] text-white/60 hover:text-white transition-colors border border-white/5 flex items-center gap-1"
+                                    >
+                                        <Globe size={10} /> {region}
+                                    </a>
+                                ))}
+                                {links.alt && (
+                                    <a href={links.alt} target="_blank" rel="noopener noreferrer" className="px-2 py-1 rounded-md bg-white/5 hover:bg-white/20 text-[10px] text-white/60 hover:text-white border border-white/5">
+                                        Alt Link
+                                    </a>
+                                )}
+                                {links.trackers && (
+                                     <a href={links.trackers} target="_blank" rel="noopener noreferrer" className="px-2 py-1 rounded-md bg-white/5 hover:bg-white/20 text-[10px] text-white/60 hover:text-white border border-white/5">
+                                        Trackers
+                                    </a>
+                                )}
+                            </div>
+                        )}
+
+                        {/* 3. Note */}
+                        {links.note && (
+                            <p className="text-[10px] italic text-white/40 mt-1 leading-tight">
+                                {links.note}
+                            </p>
+                        )}
+                    </div>
+                </div>
+            )}
         </div>
-        <p className="text-sm leading-relaxed text-white/80 font-light">
-            {item.description}
-        </p>
-    </div>
-);
+    );
+};
 
 function DockItem({ item, isActive, onClick }) {
   return (
