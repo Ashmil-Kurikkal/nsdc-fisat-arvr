@@ -48,14 +48,35 @@ export default function VisionOSInterface() {
   return (
     <div className="relative w-full min-h-screen flex flex-col bg-neutral-900 font-sans selection:bg-blue-500/30 overflow-x-hidden">
       
-      {/* --- CSS TO HIDE SCROLLBAR --- */}
+      {/* --- CSS STYLES --- */}
       <style>{`
+        /* Existing hide utility */
         .hide-scrollbar::-webkit-scrollbar {
           display: none;
         }
         .hide-scrollbar {
           -ms-overflow-style: none;
           scrollbar-width: none;
+        }
+
+        /* Styled Scrollbar */
+        .styled-scrollbar {
+          scrollbar-width: thin;
+          scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+        }
+        .styled-scrollbar::-webkit-scrollbar {
+          height: 4px; /* Thin height */
+        }
+        .styled-scrollbar::-webkit-scrollbar-track {
+          background: transparent;
+          margin: 0 4px; /* Small margin on track */
+        }
+        .styled-scrollbar::-webkit-scrollbar-thumb {
+          background-color: rgba(255, 255, 255, 0.2);
+          border-radius: 20px;
+        }
+        .styled-scrollbar::-webkit-scrollbar-thumb:hover {
+          background-color: rgba(255, 255, 255, 0.4);
         }
       `}</style>
 
@@ -81,24 +102,35 @@ export default function VisionOSInterface() {
         </div>
 
         {/* 2. Category Tabs (Flexible & Scrollable) */}
-        {/* 'min-w-0' prevents flex child from forcing overflow */}
         <div className="w-full md:flex-1 min-w-0 flex justify-start md:justify-end">
-            <GlassPanel className="p-1.5 rounded-full flex flex-row gap-1 overflow-x-auto hide-scrollbar max-w-full">
-                {categories.map((cat) => (
-                    <button
-                    key={cat}
-                    onClick={() => { setActiveCategory(cat); setActiveItem(null); }}
-                    className={`
-                        px-4 py-2 rounded-full text-xs font-medium transition-all duration-300 whitespace-nowrap
-                        ${activeCategory === cat 
-                        ? "bg-white text-black shadow-lg" 
-                        : "text-white/60 hover:bg-white/10 hover:text-white"}
-                    `}
-                    >
-                    {cat}
-                    </button>
-                ))}
-            </GlassPanel>
+            
+            {/* WRAPPER DIV: 
+               - Handles the 'overflow-x-auto' and 'styled-scrollbar'.
+               - 'pb-4' adds padding at the bottom so the scrollbar sits BELOW the glass panel.
+            */}
+            <div className="overflow-x-scroll styled-scrollbar pb-4 max-w-full">
+                
+                {/* GLASS PANEL: 
+                   - 'w-max' ensures the panel grows with buttons (doesn't wrap).
+                   - Removed overflow/scrollbar classes from here.
+                */}
+                <GlassPanel className="w-max flex flex-row gap-1 p-1.5 rounded-full">
+                    {categories.map((cat) => (
+                        <button
+                        key={cat}
+                        onClick={() => { setActiveCategory(cat); setActiveItem(null); }}
+                        className={`
+                            px-4 py-2 rounded-full text-xs font-medium transition-all duration-300 whitespace-nowrap
+                            ${activeCategory === cat 
+                            ? "bg-white text-black shadow-lg" 
+                            : "text-white/60 hover:bg-white/10 hover:text-white"}
+                        `}
+                        >
+                        {cat}
+                        </button>
+                    ))}
+                </GlassPanel>
+            </div>
         </div>
       </div>
 
@@ -195,22 +227,9 @@ export default function VisionOSInterface() {
             rounded-[32px] 
             flex items-end 
             max-w-full shadow-2xl
-            
-            /* Spacing: Tighter on mobile, wider on desktop */
             gap-3 md:gap-4 
             px-3 md:px-3
-            
-            /* PADDING TRICK: 
-               On mobile (scrollable), we need extra top padding (pt-5) so the 
-               active item can 'jump up' inside the box without getting clipped.
-               On desktop, we use standard padding (md:py-3) because it can overflow.
-            */
             pb-3 pt-5 md:py-3
-
-            /* SCROLL LOGIC: 
-               Mobile = overflow-x-auto (scrolls, hides scrollbar)
-               Desktop = overflow-visible (allows elements to pop outside)
-            */
             overflow-x-auto hide-scrollbar md:overflow-visible 
         ">
           {filteredItems.map((item) => (
@@ -266,7 +285,6 @@ function DockItem({ item, isActive, onClick }) {
         flex flex-col items-center justify-center
         transition-all duration-300 ease-[cubic-bezier(0.25,0.1,0.25,1)]
         ${isActive ? "-translate-y-2 md:-translate-y-3 z-10" : "hover:-translate-y-1"} 
-        {/* Added z-10 above to ensure the popped element stays on top */}
       `}
     >
       <div className={`

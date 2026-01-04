@@ -15,6 +15,16 @@ export const categories = [
 export const INVENTORY_DATA = [
   // IMMERSIVE HEADSETS & WEARABLES
   {
+    id: "apple-vision-pro",
+    name: "Apple Vision Pro",
+    category: "Immersive Headsets & Wearables",
+    description: "Spatial computer headset with high-resolution micro-OLED displays and advanced eye and hand tracking.",
+    specs: ["M2 + R1 Chips", "Micro-OLED displays", "Eye & hand tracking"],
+    unitsAvailable: 1,
+    texturePath: "/textures/vision-pro.png",
+    depthPath: "/textures/vision-pro-depth.jpg",
+  },
+  {
     id: "vive-pro-body-trackers",
     name: "HTC Vive Pro with Body Trackers",
     category: "Immersive Headsets & Wearables",
@@ -23,6 +33,16 @@ export const INVENTORY_DATA = [
     unitsAvailable: 1,
     texturePath: "/textures/vivepro.png",
     depthPath: "/textures/vive-pro-depth.jpg",
+  },
+  {
+    id: "rayban-smart-mirrored-sunglasses",
+    name: "Ray-Ban Smart Mirrored Sunglasses (SLAM OS)",
+    category: "Immersive Headsets & Wearables",
+    description: "Smart wearable sunglasses with SLAM operating system for AR navigation and spatial awareness.",
+    specs: ["SLAM OS", "Built-in cameras", "Real-time spatial mapping"],
+    unitsAvailable: 1,
+    texturePath: "/textures/rayban.png",
+    depthPath: "/textures/rayban-smart-depth.jpg",
   },
   {
     id: "vive-focus-body-trackers",
@@ -44,26 +64,7 @@ export const INVENTORY_DATA = [
     texturePath: "/textures/meta-quest-3s.png",
     depthPath: "/textures/meta-quest-3s-depth.jpg",
   },
-  {
-    id: "rayban-smart-mirrored-sunglasses",
-    name: "Ray-Ban Smart Mirrored Sunglasses (SLAM OS)",
-    category: "Immersive Headsets & Wearables",
-    description: "Smart wearable sunglasses with SLAM operating system for AR navigation and spatial awareness.",
-    specs: ["SLAM OS", "Built-in cameras", "Real-time spatial mapping"],
-    unitsAvailable: 1,
-    texturePath: "/textures/rayban.png",
-    depthPath: "/textures/rayban-smart-depth.jpg",
-  },
-  {
-    id: "apple-vision-pro",
-    name: "Apple Vision Pro",
-    category: "Immersive Headsets & Wearables",
-    description: "Spatial computer headset with high-resolution micro-OLED displays and advanced eye and hand tracking.",
-    specs: ["M2 + R1 Chips", "Micro-OLED displays", "Eye & hand tracking"],
-    unitsAvailable: 1,
-    texturePath: "/textures/vision-pro.png",
-    depthPath: "/textures/vision-pro-depth.jpg",
-  },
+  
   {
     id: "microsoft-hololens-2",
     name: "Microsoft HoloLens 2",
