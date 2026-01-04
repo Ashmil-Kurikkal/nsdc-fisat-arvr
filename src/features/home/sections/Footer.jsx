@@ -1,6 +1,5 @@
 import React from 'react';
-import { Box, Instagram, Linkedin, Github, Heart, ExternalLink } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Box, Instagram, Linkedin, Github, Heart, MessageCircle } from 'lucide-react';
 
 const Footer = () => {
 
@@ -8,7 +7,6 @@ const Footer = () => {
         const element = document.getElementById(id);
         if (element) {
         element.scrollIntoView({ behavior: 'smooth' });
-        setIsOpen(false); // Close mobile menu after clicking
         }
     };
   const currentYear = new Date().getFullYear();
@@ -65,10 +63,35 @@ const Footer = () => {
           
           <div className="flex items-center gap-1 group cursor-default">
             <span>Designed & Developed by</span>
-            <span className="text-slate-300 font-medium flex items-center gap-1">
-               <Link to="https://github.com/Ashmil-Kurikkal">Ashmil Kurikkal</Link>
-               <Heart size={12} className="text-red-500 fill-red-500 group-hover:animate-bounce" />
-            </span>
+            
+            <div className="flex items-center gap-3 ml-1">
+                {/* Name Link */}
+                <a 
+                    href="https://github.com/Ashmil-Kurikkal" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="text-slate-300 font-medium hover:text-white transition-colors flex items-center gap-1"
+                >
+                   Ashmil Kurikkal
+                   <Heart size={12} className="text-red-500 fill-red-500 group-hover:animate-bounce" />
+                </a>
+
+                {/* Vertical Divider */}
+                <div className="h-3 w-px bg-white/20"></div>
+
+                {/* Personal Links */}
+                <div className="flex items-center gap-2">
+                    <a href="https://www.linkedin.com/in/ashmil-kurikkal/" target="_blank" rel="noopener noreferrer" className="text-slate-500 hover:text-[#0077b5] transition-colors" title="LinkedIn">
+                        <Linkedin size={14} />
+                    </a>
+                    <a href="https://www.instagram.com/ashmilkurikkal/" target="_blank" rel="noopener noreferrer" className="text-slate-500 hover:text-[#E4405F] transition-colors" title="Instagram">
+                        <Instagram size={14} />
+                    </a>
+                    <a href="https://wa.me/918129353938" target="_blank" rel="noopener noreferrer" className="text-slate-500 hover:text-[#25D366] transition-colors" title="WhatsApp">
+                        <MessageCircle size={14} />
+                    </a>
+                </div>
+            </div>
           </div>
 
         </div>
