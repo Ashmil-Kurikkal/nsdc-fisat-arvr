@@ -4,7 +4,7 @@ import { Canvas } from "@react-three/fiber";
 import { Environment, PerspectiveCamera, ContactShadows } from "@react-three/drei";
 import { INVENTORY_DATA, categories } from "./assets/data";
 import { Layers, Cpu, ChevronRight } from "lucide-react";
-import HoloCard from "./components/Holocard.jsx";
+import HoloCard from "./components/HoloCard.jsx";
 import { useNavigate } from "react-router-dom";
 
 // --- REUSABLE GLASS COMPONENT ---
