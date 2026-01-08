@@ -75,8 +75,10 @@ export default function Hero({ hideNav }) {
             <div className="hidden lg:flex items-center gap-3">
               <GlassButton onClick={() => scrollToSection('about')} className="!px-4 !py-2 text-sm"><Info size={16}/><span>About The Lab</span></GlassButton>
               <GlassButton onClick={() => scrollToSection('events')} className="!px-4 !py-2 text-sm"><Calendar size={16}/><span>Events</span></GlassButton>
+              <GlassButton onClick={() => scrollToSection('gallery')} className="!px-4 !py-2 text-sm"><Layers size={16}/><span>Gallery</span></GlassButton>
               <GlassButton onClick={() => scrollToSection('staff')} className="!px-4 !py-2 text-sm"><Users size={16}/><span>The Team</span></GlassButton>
               <GlassButton onClick={() => scrollToSection('contact')} active className="!px-4 !py-2 text-sm font-bold text-black-600"><Mail size={16}/><span>Contact</span></GlassButton>
+              
             </div>
 
             {/* Mobile Toggle */}
