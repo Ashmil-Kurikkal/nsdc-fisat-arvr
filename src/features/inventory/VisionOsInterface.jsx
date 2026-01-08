@@ -218,8 +218,22 @@ export default function VisionOSInterface() {
 
 // --- SUB COMPONENTS ---
 
+// --- UPDATED SPECS CONTENT WITH UNITS ---
 const SpecsContent = ({ item }) => (
     <div className="flex flex-col h-full justify-center">
+        {/* Units Available Highlight */}
+        <div className="mb-6 p-3 rounded-xl bg-white/5 border border-white/10 flex items-center justify-between">
+            <span className="text-xs text-white/50 font-medium uppercase tracking-wider">
+                In Stock
+            </span>
+            <div className="flex items-center gap-2">
+                <div className={`w-2 h-2 rounded-full ${item.unitsAvailable > 0 ? 'bg-green-400 shadow-[0_0_8px_rgba(74,222,128,0.5)]' : 'bg-red-400'}`} />
+                <span className="text-lg font-bold text-white font-audiowide">
+                    {item.unitsAvailable < 10 ? `0${item.unitsAvailable}` : item.unitsAvailable}
+                </span>
+            </div>
+        </div>
+
         <div className="flex items-center gap-2 mb-4 text-blue-300">
             <Cpu size={16} />
             <span className="text-[10px] font-bold uppercase tracking-widest">Specifications</span>
