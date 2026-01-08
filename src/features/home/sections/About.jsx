@@ -27,9 +27,9 @@ const About = () => {
       {/* Grid of Cards */}
       <div className="grid md:grid-cols-3 gap-6">
         {[
-          { icon: Target, title: "Mission", desc: "To provide a platform for students and researchers to explore and learn about AR/VR technology." },
-          { icon: Lightbulb, title: "Vision", desc: "To provide a platform for students and researchers to explore and learn about AR/VR technology." },
-          { icon: Zap, title: "Vision", desc: "To provide a platform for students and researchers to explore and learn about AR/VR technology." }
+          { icon: Target, title: "Mission", desc: "To create an accessible and collaborative platform that enables students and researchers to learn, experiment, and innovate using Augmented Reality (AR) and Virtual Reality (VR) technologies." },
+          { icon: Lightbulb, title: "Vision", desc: "To become a leading hub for AR/VR education and research, fostering innovation that bridges academia, industry, and real-world applications." },
+          { icon: Zap, title: "Objectives", desc: "Provide high-quality learning resources for AR/VR" }
         ].map((item, index) => (
           <motion.div key={index} variants={fadeInUp}>
             <LiquidGlass className="h-full p-8 flex flex-col items-center text-center gap-4 hover:bg-white/100 transition-colors relative overflow-visible">
